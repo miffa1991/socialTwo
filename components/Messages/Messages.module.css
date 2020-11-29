@@ -1,0 +1,19 @@
+.dialogsContainer{
+   padding: 20px;
+   width: 80%;
+   display: flex;
+   text-align: left;
+   height: 100vh;
+   background: indianred;
+}
+.dialogs a{
+   display: inline-block;
+   width: 100%;
+   margin: 10px 0;
+   color: #ffffff;
+   text-decoration: none;
+}
+
+.messagesSend > div{
+   margin: 10px 0;
+}

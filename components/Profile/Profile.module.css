@@ -1,0 +1,33 @@
+.profile{
+   width: 80%;
+   height: 100vh;
+}
+.wallPosts{
+   width: 100%;
+   padding: 20px;
+}
+.addPostWall{
+   margin: 20px 0;
+   width: 100%;
+}
+.addPostWall textarea{
+   width: 500px;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 10px;
+}
+.addPostWall button{
+   width: 200px;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 10px;
+   height: 50px;
+   line-height: 50px;
+   font-weight: bold;
+   background-color:goldenrod;
+   border: none;
+}
+.addPostWall button:hover{
+   cursor: pointer;
+}
