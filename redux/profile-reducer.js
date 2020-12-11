@@ -21,16 +21,22 @@ let profileReducer = (state = initialState, action) => {
             message:state.newTextPost,
             likeCount:0
          }
-         
-         state.postWall.push(newPost);
-         state.newTextPost = '';
-         // debugger;
-         return state;
+
+         return {
+            ...state,
+            postWall:[...state.postWall, newPost],
+            newTextPost: ''
+         };
       case UPDATE_TEXT_NEW_POST:
-         state.newTextPost = action.text;
-         return state;
+
+         return {
+            ...state,
+            newTextPost: action.text
+         };
       default:
-         return state;
+         return {
+            ...state
+         };
    }
 }
 

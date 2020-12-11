@@ -11,11 +11,8 @@ const App = (props) => {
       <Header />
       <div className="container" >
         <Navbar />
-        <Route path='/profile' render={ () => <Profile  state={props.state.profilePage}
-                                                        dispatch={props.dispatch}
-                                                        /> } />
-        <Route path='/dialogs' render={ () => <MessagesContainer state={props.state.messagePage} 
-                                                        dispatch={props.dispatch} />} />
+        <Route path='/profile' render={ () => <Profile /> } />
+        <Route path='/dialogs' render={ () => <MessagesContainer />} />
       </div>
     </div>
   );
