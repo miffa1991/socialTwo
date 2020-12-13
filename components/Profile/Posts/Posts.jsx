@@ -4,7 +4,7 @@ import PostPublic from './PostPublic/PostPublic';
 
 
 const Posts = (props) => {
-   debugger;
+   // debugger;
    let postElements = props.posts.map( p => ( <PostPublic postSend={p.message} />) );
    // let postElementRef = React.createRef();//создаем пустую ссылку
    let addPost = () => {

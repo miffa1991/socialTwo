@@ -4,7 +4,7 @@ import Dialogs from './Dialogs/Dialogs';
 import MessageItem from './MessageItem/MessageItem';
 
 const Messages = (props) =>{
-   debugger;
+   // debugger;
    let dialogElements = props.dialogArr.map( d => (<Dialogs name={d.name} id={d.id} />));
    let messageElements = props.messageArr.map( m => (<MessageItem message={m.message} />));
    //let messageElementRef = React.createRef(); //створюемо пусту ссылку
