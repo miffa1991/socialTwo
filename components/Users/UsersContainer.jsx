@@ -7,20 +7,20 @@ import Users from './Users';
 let stateToProps = (state) => {
    // debugger;
    return {
-         follow: state.userPage.users.follow
+         users: state.userPage.users
    }
 }
 
 let dispatchToProps = (dispatch) => {
    return{
-      follow:() =>{
-         dispatch(followAC());
+      follow:(userId) =>{
+         dispatch(followAC(userId));
       },
-      unfollowAC:() =>{
-         dispatch(unfollowAC());
+      unfollow:(userId) =>{
+         dispatch(unfollowAC(userId));
       },
-      setUsers:() =>{
-         dispatch(setUsersAC());
+      setUsers:(users) =>{
+         dispatch(setUsersAC(users));
       }
    }
 }
