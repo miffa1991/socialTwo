@@ -3,6 +3,7 @@
    flex-wrap: wrap;
    width: 100%;
    justify-content: space-between;
+
 }
 .userItem{
    width: 48%;
@@ -15,4 +16,36 @@
    width: 70%;
    display: flex;
    justify-content: space-between;
+}
+
+/* user */
+
+.foto img{
+   box-sizing: border-box;
+   padding: 20px;
+   max-width: 100%;
+}
+
+/* pagination */
+
+
+.pagination{
+   display: flex;
+   flex-wrap: wrap;
+   width: 100%;
+   justify-content: space-between;
+}
+.pagination > span{
+   padding: 10px;
+   align-items: center;
+   background-color: lightsalmon;
+   margin: 5px;
+   width: 26px;
+   height: 26px;
+   line-height: 26px;
+   border-radius: 50%;
+}
+
+.pagination > span.active{
+   background-color: lightseagreen;
 }
