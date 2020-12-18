@@ -1,49 +1,27 @@
-import * as axios from 'axios';
 import React from 'react';
 import s from './Users.module.css';
 import avatar from '../../assets/img/avatar.jpg';
 
-class Users extends React.Component {
-   
-   componentDidMount(){
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.count}&page=${this.props.currentPage}`) //відправляємо запрос на сервер
-      .then(response => { //відповідь з сервера
-         this.props.setUsers(response.data.items);
-         this.props.setPageCount(response.data.totalCount);
-         console.log(response.data.totalCount);
-      });
-   }
 
-   currentPage = (count) => {
-      // console.log(p);
-      // debugger;
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.count}&page=${count}`) //відправляємо запрос на сервер
-      .then(response => { //відповідь з сервера
-         this.props.setUsers(response.data.items);
-         this.props.setPageCount(response.data.totalCount);
-      });
-      this.props.setCurrentPage(count);
+
+const Users = (props) =>{
+   debugger;
+   let pageCount =  Math.ceil(props.totalCount/props.count);
+   let arrPage = [];
+   
+   for(let i = 1; i <= pageCount; i++){
+      arrPage.push(i);
    }
    
-   // currentPage
-   render() {
-       debugger;
-      let pageCount =  Math.ceil(this.props.totalCount/this.props.count);
-      let arrPage = [];
-      
-      for(let i = 1; i <= pageCount; i++){
-         arrPage.push(i);
-      }
-
-      // console.log(arrPage);
-      return <div className={s.users}>
+   return(
+       <div className={s.users}>
          <div className={s.pagination}>
             { arrPage.map( p => {
-               return <span key={p} id={p} onClick={  ()=>{ this.currentPage(p); }}
-               className={this.props.currentPage == p ? s.active : ''} >{p}</span>
+               return <span key={p} id={p} onClick={  ()=>{ props.currentPage(p); }}
+               className={props.currentPageProps == p ? s.active : ''} >{p}</span>
             })}
          </div>
-      { this.props.users.map( u => (
+      { props.users.map( u => (
       <div className={s.userItem} key={u.id}>
          <div className={s.col1}>
             <div className={s.foto}>
@@ -67,7 +45,7 @@ class Users extends React.Component {
    )) }
    
       </div>
-   }
+   )
 }
 
 export default Users; 
