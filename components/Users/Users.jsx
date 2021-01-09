@@ -1,34 +1,48 @@
 import React from 'react';
 import s from './Users.module.css';
 import avatar from '../../assets/img/avatar.jpg';
+import { NavLink } from 'react-router-dom';
+import { followAPI } from '../../api/api';
 
 
 
 const Users = (props) =>{
-   debugger;
+   // debugger;
    let pageCount =  Math.ceil(props.totalCount/props.count);
    let arrPage = [];
    
    for(let i = 1; i <= pageCount; i++){
       arrPage.push(i);
    }
-   
+
    return(
        <div className={s.users}>
-         <div className={s.pagination}>
-            { arrPage.map( p => {
-               return <span key={p} id={p} onClick={  ()=>{ props.currentPage(p); }}
-               className={props.currentPageProps == p ? s.active : ''} >{p}</span>
-            })}
-         </div>
+       
       { props.users.map( u => (
+         
       <div className={s.userItem} key={u.id}>
          <div className={s.col1}>
             <div className={s.foto}>
-               <img src={u.photos.small == null ? avatar : u.photos.small } alt=""/>
+               <NavLink to={'/profile/' + u.id} >
+                  <img src={u.photos.small === null ? avatar : u.photos.small } alt=""/>
+               </NavLink>
                { u.followed ? 
-               <button onClick={ ()=>{u.unfollow(u.id)} }>unfollow</button> : 
-               <button onClick={ ()=>{u.follow(u.id)} }>follow</button> }
+               <button onClick={ ()=>{
+                  followAPI.unfollow(u.id) //відправляємо запрос на сервер
+               .then(data => { //відповідь з сервера
+                  props.unfollow(u.id)
+
+      });
+                  
+                  } }>unfollow</button> : 
+               <button onClick={ ()=>{
+                  followAPI.follow(u.id) //відправляємо запрос на сервер
+               .then(data => { //відповідь з сервера
+                  props.follow(u.id)
+         
+      });
+                  
+                  } }>follow</button> }
             </div>
          </div>
          <div className={s.col2}>
@@ -43,7 +57,12 @@ const Users = (props) =>{
          </div>
    </div>
    )) }
-   
+     <div className={s.pagination}>
+            { arrPage.map( p => {
+               return <span key={p} id={p} onClick={  ()=>{ props.currentPage(p); }}
+               className={props.currentPageProps === p ? s.active : ''} >{p}</span>
+            })}
+         </div>
       </div>
    )
 }

@@ -1,6 +1,7 @@
 // константы
 const ADD_POST = 'ADD-POST';
 const UPDATE_TEXT_NEW_POST = 'POST-CHANGE';
+const PROFILE_STATE = 'PROFILE_STATE';
 
 let initialState = {
    postWall: [
@@ -8,7 +9,8 @@ let initialState = {
       {id:2, message:'Go Go Go', likeCount:22},
       {id:3, message:'Go Go Go', likeCount:23}
    ],
-   newTextPost: ''
+   newTextPost: '',
+   profile: null
 };
 
 let profileReducer = (state = initialState, action) => {
@@ -33,6 +35,13 @@ let profileReducer = (state = initialState, action) => {
             ...state,
             newTextPost: action.text
          };
+      case PROFILE_STATE:
+
+      return {
+         ...state,
+         profile: action.profile
+      };
+         
       default:
          return {
             ...state
@@ -44,5 +53,5 @@ let profileReducer = (state = initialState, action) => {
 //action creator можно просто импортировать в компоненты
 export const addNewPostActionCreator = () => ({type:ADD_POST}); 
 export const changePostTextActionCreator = (text) => ({type:UPDATE_TEXT_NEW_POST, text:text}); 
-
+export const profileState = (profile) =>({type:PROFILE_STATE, profile});
 export default profileReducer;

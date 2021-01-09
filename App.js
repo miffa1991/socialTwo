@@ -1,18 +1,19 @@
 import { Route } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header/Header.jsx';
+import HeaderContainer from './components/Header/HeaderContainer.jsx';
 import MessagesContainer from './components/Messages/MessagesContainer';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
+import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 const App = (props) => {
    //debugger;
   return (
     <div className="App">
-      <Header />
+      <HeaderContainer />
       <div className="container" >
         <Navbar />
-        <Route path='/profile' render={ () => <Profile /> } />
+        <Route path={`/profile/:userID?`} 
+        render={ () => <ProfileContainer /> } /> 
         <Route path='/dialogs' render={ () => <MessagesContainer />} />
         <Route path='/users' render={ () => <UsersContainer /> } />
       </div>
@@ -20,6 +21,6 @@ const App = (props) => {
   );
 }
 
-
+/*<!-- ":" - параметр "?" - не обезательный -->*/ 
 
 export default App;
