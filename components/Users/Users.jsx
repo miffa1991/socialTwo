@@ -27,20 +27,11 @@ const Users = (props) =>{
                   <img src={u.photos.small === null ? avatar : u.photos.small } alt=""/>
                </NavLink>
                { u.followed ? 
-               <button onClick={ ()=>{
-                  followAPI.unfollow(u.id) //відправляємо запрос на сервер
-               .then(data => { //відповідь з сервера
-                  props.unfollow(u.id)
-
-      });
-                  
+               <button disabled={props.disable.some(id => id === u.id)} onClick={ ()=>{
+                  props.unfollow(u.id); //відправляємо запрос на сервер
                   } }>unfollow</button> : 
-               <button onClick={ ()=>{
-                  followAPI.follow(u.id) //відправляємо запрос на сервер
-               .then(data => { //відповідь з сервера
-                  props.follow(u.id)
-         
-      });
+               <button  disabled={props.disable.some(id => id === u.id)} onClick={ ()=>{
+                  props.follow(u.id); //відправляємо запрос на сервер
                   
                   } }>follow</button> }
             </div>

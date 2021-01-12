@@ -1,55 +1,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { follow,
    unfollow,
-   setUsers,
+   getUsers,
    setCurrentPage,
    setPageCount,
-   isFetching} from '../../redux/users-reducer';
+   isFetching,
+   isDisable} from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
-import { usersAPI } from '../../api/api';
 
 
 class UsersContainer extends React.Component {
    
    componentDidMount(){
-      this.props.isFetching(true);
-      usersAPI.setUsers(this.props.count,this.props.currentPage ) //відправляємо запрос на сервер
-      .then(data => { //відповідь з сервера
-         this.props.isFetching(false);
-         this.props.setUsers(data.items);
-         this.props.setPageCount(data.totalCount);
-         // console.log(response.data.totalCount);
-        
-      });
-      
+      this.props.getUsers(this.props.count, this.props.currentPage); 
    }
 
    currentPage = (current) => {
       // console.log(p);
       // debugger;
-      this.props.isFetching(true);
-      usersAPI.setUsers(this.props.count, current ) //відправляємо запрос на сервер
-      .then(data => { //відповідь з сервера
-         this.props.isFetching(false);
-         this.props.setUsers(data.items);
-         this.props.setPageCount(data.totalCount);
-         
-      });
       this.props.setCurrentPage(current);
+      this.props.getUsers(this.props.count, current);
    }
    
    // currentPage
    render() {
       // debugger;
       return <>
-         {this.props.fetching == true ? <Preloader /> :    
+         {this.props.fetching === true ? <Preloader /> :    
          <Users {...this.props}  users={this.props.users}
                   count= {this.props.count} 
                   totalCount = {this.props.totalCount}
                   currentPage={this.currentPage}
                   currentPageProps = {this.props.currentPage}
+                 
                />
          }
       </>
@@ -63,7 +49,8 @@ let stateToProps = (state) => {
          count: state.userPage.count, 
          currentPage:state.userPage.currentPage,
          totalCount:state.userPage.totalCount,
-         fetching:state.userPage.fetching
+         fetching:state.userPage.fetching,
+         disable:state.userPage.disable
    }
 }
 
@@ -91,11 +78,12 @@ let stateToProps = (state) => {
 //    }
 // }
 
-export default connect(stateToProps, 
+export default compose( connect(stateToProps, 
    {follow,
    unfollow,
-   setUsers,
+   getUsers,
    setCurrentPage,
    setPageCount,
-   isFetching
-   })(UsersContainer);
+   isFetching,
+   isDisable
+   }))(UsersContainer);
