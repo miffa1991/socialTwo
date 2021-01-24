@@ -4,12 +4,14 @@ import profileReducer from './profile-reducer';
 import dialogsReducer from './dialogs-reducer';
 import usersReducer from './users-reducer';
 import authReducer from './auth-reducer';
+import { reducer as formReducer } from 'redux-form'
 
 let reducersBox = combineReducers({
    profilePage:profileReducer,
    messagePage:dialogsReducer,
    userPage: usersReducer,
-   auth:authReducer
+   auth:authReducer,
+   form: formReducer //reducer redux-form
 });
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //настройка расширения для хрома

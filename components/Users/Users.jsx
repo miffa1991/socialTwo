@@ -2,7 +2,6 @@ import React from 'react';
 import s from './Users.module.css';
 import avatar from '../../assets/img/avatar.jpg';
 import { NavLink } from 'react-router-dom';
-import { followAPI } from '../../api/api';
 
 
 

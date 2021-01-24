@@ -1,6 +1,5 @@
 // константы
 const ADD_MESSAGE = 'ADD_MESSAGE';
-const UPDATE_TEXT_NEW_MESSAGE = 'UPDATE_TEXT_NEW_MESSGE';
 
 let initialState = {
       dialogArr: [
@@ -12,8 +11,7 @@ let initialState = {
          {id:1, message:'hi'},
          {id:2, message:'How are you?'},
          {id:3, message:'How are you?'}
-      ],
-      newTextMessage: ''
+      ]
 };
 
 let dialogsReducer = (state = initialState, action) => {
@@ -23,18 +21,13 @@ let dialogsReducer = (state = initialState, action) => {
       case ADD_MESSAGE:
          let newMessage = {
             id:5,
-            message:state.newTextMessage,
+            message:action.newTextMessage,
          }
          return {
             ...state,
-            messageArr: [...state.messageArr, newMessage],
-            newTextMessage: ''
+            messageArr: [...state.messageArr, newMessage]
          }
-      case UPDATE_TEXT_NEW_MESSAGE:
-         return {
-            ...state,
-            newTextMessage: action.text
-         };
+
       default:
          return state;
    }
@@ -42,7 +35,7 @@ let dialogsReducer = (state = initialState, action) => {
 
 
 //action creator можно просто импортировать в компоненты
-export const addNewMessageActionCreator = () => ({type:ADD_MESSAGE}); 
-export const changeMessageTextActionCreator = (text) => ({type:UPDATE_TEXT_NEW_MESSAGE, text:text}); 
+export const addNewMessageActionCreator = (newTextMessage) => ({type:ADD_MESSAGE, newTextMessage}); 
+// export const changeMessageTextActionCreator = (text) => ({type:UPDATE_TEXT_NEW_MESSAGE, text:text}); 
 
 export default dialogsReducer;

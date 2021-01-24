@@ -1,3 +1,5 @@
+import { authAPI } from "../api/api";
+
 // константы
 const SET_AUTH = 'SET_AUTH';
 
@@ -30,6 +32,18 @@ let authReducer = (state = initialState, action) => {
 
 //action creator можно просто импортировать в компоненты
 
-export const setAuth = (id, login, email) =>({type:SET_AUTH, data:{id, login, email }});
+const setAuth = (id, login, email) =>({type:SET_AUTH, data:{id, login, email }});
+
+
+
+
+export const getAuth = () => async (dispatch) => {
+
+	let response = await authAPI.getAuth();
+	if (response.data.resultCode === 0) {
+		dispatch(setAuth(null, null, null, false));
+	}
+
+}
 
 export default authReducer;
