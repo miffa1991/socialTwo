@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import { getAuth } from '../../redux/auth-reducer';
+import { logout } from '../../redux/auth-reducer';
 import { compose } from 'redux';
-import { withAuthRedirect } from '../../redux/hoc/withAuthRedirect';
+// import { withAuthRedirect } from '../../redux/hoc/withAuthRedirect';
 class HeaderContainer extends React.Component {
   
-  componentDidMount(){
-    this.props.getAuth();
-    
-  }
+
 
   render(){
     
@@ -26,6 +23,6 @@ class HeaderContainer extends React.Component {
   });
 
   export default compose( 
-    connect(mapStateToProps, { getAuth }),
+    connect(mapStateToProps, { logout }),
     // withAuthRedirect
     ) (HeaderContainer);
