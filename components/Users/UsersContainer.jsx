@@ -10,6 +10,12 @@ import { follow,
    isDisable} from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
+import { listUsers, 
+   countUsers, 
+   currentPageS, 
+   totalCountS,
+   fetchingS, 
+   disableS } from '../../redux/users-selector';
 
 
 class UsersContainer extends React.Component {
@@ -35,7 +41,6 @@ class UsersContainer extends React.Component {
                   totalCount = {this.props.totalCount}
                   currentPage={this.currentPage}
                   currentPageProps = {this.props.currentPage}
-                 
                />
          }
       </>
@@ -45,12 +50,12 @@ class UsersContainer extends React.Component {
 let stateToProps = (state) => {
    //  debugger;
    return {
-         users: state.userPage.users,
-         count: state.userPage.count, 
-         currentPage:state.userPage.currentPage,
-         totalCount:state.userPage.totalCount,
-         fetching:state.userPage.fetching,
-         disable:state.userPage.disable
+         users: listUsers(state),
+         count: countUsers(state), 
+         currentPage: currentPageS(state),
+         totalCount: totalCountS(state),
+         fetching: fetchingS(state),
+         disable: disableS(state)
    }
 }
 
