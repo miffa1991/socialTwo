@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 const StatusUserWithHook = (props) => {
    const [state, setstate] = useState(false);
    const [status, setstatus] = useState(props.status);
+
+   useEffect(() => { //Возвращаем после отрисовки страницы
+      setstatus(props.status);
+   }, [props.status]); // Выполняем каждый раз когда стату изменился. Если указать [] то будет выполнятся только один раз
+
    const activeMode = () => {
       setstate(true);  // меняем локальний стейт
    }
