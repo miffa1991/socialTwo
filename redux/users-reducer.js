@@ -1,3 +1,4 @@
+import { updateObjectInArray } from "../utils/object-helpers";
 import { userAPI } from "./../api/api";
 
 // константы
@@ -19,78 +20,68 @@ let initialState = {
 };
 
 let usersReducer = (state = initialState, action) => {
-
+   
    switch (action.type) {
-
+      
       case SET_USERS:
-
-         return {
-            ...state,
-            users:[...action.users]
+      
+      return {
+         ...state,
+         users:[...action.users]
       };
-
+      
       case CURRENT_PAGE:
-
-         return {
-            ...state,
-            currentPage:action.count
+      
+      return {
+         ...state,
+         currentPage:action.count
       };
-
+      
       case TOTAL_USERS:
-
-         return {
-            ...state,
-            totalCount:action.totalCount
+      
+      return {
+         ...state,
+         totalCount:action.totalCount
       };
       
       case FOLLOW:
-         
-         return {
-				...state,
-				users: state.users.map(u => {
-					if (u.id === action.id) {
-						return { ...u, followed: true };
-					}
-					return u;
-				})
+      
+      return {
+         ...state,
+         users: updateObjectInArray(state.users, action.userID, 'id', {followed: true})
       };
-         
+      
       case UNFOLLOW:
-
-            return {
-               ...state,
-               users: state.users.map(u => {
-                  if (u.id === action.id) {
-                     return { ...u, followed: false };
-                  }
-                  return u;
-               })
-            };
-            
+      
+      return {
+         ...state,
+         users: updateObjectInArray(state.users, action.userID, 'id', {followed: false}) 
+      };
+      
       case IS_FETCHING:
-
-         return {
-            ...state,
-            fetching:action.fetching
-         };
+      
+      return {
+         ...state,
+         fetching:action.fetching
+      };
       case IS_DISABLE_BUTTONS:
-
-         return {
-            ...state, disable: action.isFetching
-            ? [...state.disable, action.userId]
-            : state.disable.filter(id => id !== action.userId)
-         };
-
-         
+      
+      return {
+         ...state, disable: action.isFetching
+         ? [...state.disable, action.userId]
+         : state.disable.filter(id => id !== action.userId)
+      };
+      
+      
       default:
-         return state;
+      return state;
    }
 }
 
 
 //action creator можно просто импортировать в компоненты
-export const followAC = (userID) => ({type:FOLLOW, id:userID}); 
-export const unFollowAC = (userID) => ({type:UNFOLLOW, id:userID}); 
+export const followAC = (userID) => ({type:FOLLOW, userID}); 
+export const unFollowAC = (userID) => ({type:UNFOLLOW, userID}); 
 export const setUsers = (users) => ({type:SET_USERS, users}); 
 export const setCurrentPage = (currentPage) => ({type:CURRENT_PAGE, count:currentPage});
 export const setPageCount = (totalCount) => ({type:TOTAL_USERS, totalCount}); 
@@ -102,37 +93,31 @@ export const isDisable = (isFetching, userId) => ({ type: IS_DISABLE_BUTTONS, is
 
 //dispatch thunk
 
-export const getUsers = (currentPage, pageSize) => {
-	return async (dispatch) => {
-		dispatch(isFetching(true));
-		const data = await userAPI.setUsers(currentPage, pageSize);
-		dispatch(isFetching(false));
-		dispatch(setUsers(data.items));
-		dispatch(setPageCount(data.totalCount));
-
-	}
+export const getUsers = (currentPage, pageSize) =>  async (dispatch) => {
+   dispatch(isFetching(true));
+   dispatch(setCurrentPage(currentPage))
+   const data = await userAPI.setUsers(currentPage, pageSize);
+   dispatch(isFetching(false));
+   dispatch(setUsers(data.items));
+   dispatch(setPageCount(data.totalCount));
 }
 
-export const follow = (userId) => {
-	return async (dispatch) => {
-		dispatch(isDisable(true, userId));
-		const response = await userAPI.getFollow(userId);
-		if (response.data.resultCode === 0) {
-			dispatch(followAC(userId));
-		}
-		dispatch(isDisable(false, userId));
-	}
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => { 
+   //виносимо код з follow, unfollow який дублюється в окрему функцію
+   dispatch(isDisable(true, userId));
+   const response = await apiMethod(userId);
+   if (response.data.resultCode === 0) {
+      dispatch(actionCreator(userId));
+   }
+   dispatch(isDisable(false, userId));
 }
 
-export const unfollow = (userId) => {
-	return async (dispatch) => {
-		dispatch(isDisable(true, userId));
-		const response = await userAPI.getUnFollow(userId);
-		if (response.data.resultCode === 0) {
-			dispatch(unFollowAC(userId));
-		}
-		dispatch(isDisable(false, userId));
-	}
+export const follow = (userId) =>  async (dispatch) => {
+   followUnfollowFlow(dispatch, userId, userAPI.getFollow.bind(userId), followAC);
+}
+
+export const unfollow = (userId) => async (dispatch) => {
+   followUnfollowFlow(dispatch, userId, userAPI.getUnFollow.bind(userId), unFollowAC);
 }
 
 

@@ -2,7 +2,7 @@ import { stopSubmit } from "redux-form";
 import { authAPI } from "../api/api";
 
 // константы
-const SET_AUTH = 'SET_AUTH';
+const SET_AUTH = 'SET_AUTH/auth';
 
 let initialState = {
    id: null,
@@ -44,7 +44,7 @@ export const getAuth = () => async (dispatch) => {
       let {id, email, login} = response.data.data; 
 		dispatch(setAuth(id, email, login, true));
 	}
-    return 'yo';
+   
 }
 
 export const login = (email, password, rememberMe) => async (dispatch) => {

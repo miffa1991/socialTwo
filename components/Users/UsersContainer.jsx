@@ -5,9 +5,7 @@ import { follow,
    unfollow,
    getUsers,
    setCurrentPage,
-   setPageCount,
-   isFetching,
-   isDisable} from '../../redux/users-reducer';
+   setPageCount} from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
 import { listUsers, 
@@ -41,6 +39,8 @@ class UsersContainer extends React.Component {
                   totalCount = {this.props.totalCount}
                   currentPage={this.currentPage}
                   currentPageProps = {this.props.currentPage}
+                  follow = {this.props.follow}
+                  unfollow = {this.props.unfollow}
                />
          }
       </>
@@ -59,36 +59,10 @@ let stateToProps = (state) => {
    }
 }
 
-// let dispatchToProps = (dispatch) => {
-//    return{
-//       follow:(userId) =>{
-//          dispatch(followAC(userId));
-//       },
-//       unfollow:(userId) =>{
-//          dispatch(unfollowAC(userId));
-//       },
-//       setUsers:(users) =>{
-//          dispatch(setUsersAC(users));
-//       },
-//       setCurrentPage:(count) =>{
-//          dispatch(setCurrentPageAC(count));
-//       },
-//       setPageCount:(totalUsers) =>{
-//          dispatch(setPageCountAC(totalUsers));
-//       },
-
-//       isFetching:(fetching) => {
-//          dispatch(isFetchingAC(fetching));
-//       }
-//    }
-// }
-
 export default compose( connect(stateToProps, 
    {follow,
    unfollow,
    getUsers,
    setCurrentPage,
-   setPageCount,
-   isFetching,
-   isDisable
+   setPageCount
    }))(UsersContainer);

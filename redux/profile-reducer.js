@@ -1,9 +1,9 @@
 import { profileAPI } from "../api/api";
 
 // константы
-const ADD_POST = 'ADD-POST';
-const PROFILE_STATE = 'PROFILE_STATE';
-const SET_STATUS = 'SET_STATUS';
+const ADD_POST = 'ADD-POST/profile';
+const PROFILE_STATE = 'PROFILE_STATE/profile';
+const SET_STATUS = 'SET_STATUS/profile';
 
 let initialState = {
    postWall: [
@@ -62,24 +62,21 @@ const setStatus = (status) =>({type:SET_STATUS, status});
 
 // thunk
 
-export const getProfile = (userId) => (dispatch) => {
-   profileAPI.getProfile(userId).then( response => {
+export const getProfile = (userId) => async (dispatch) => {
+   let response = await profileAPI.getProfile(userId);
       dispatch(setProfile(response.data));
-   })
 }
 
-export const getStatus = (userId) => (dispatch) => {
-   profileAPI.getStatus(userId).then( response => {
+export const getStatus = (userId) => async (dispatch) => {
+   let response = await  profileAPI.getStatus(userId);
       dispatch(setStatus(response.data));
-   })
 }
 
-export const updateStatus = (status) => (dispatch) => {
-   profileAPI.updateStatus(status).then( response => {
+export const updateStatus = (status) => async (dispatch) => {
+   let response = await  profileAPI.updateStatus(status);
       if(response.data.resultcode === 0){
          dispatch(setStatus(response.data));
       }
-   })
 }
 
 export default profileReducer;
