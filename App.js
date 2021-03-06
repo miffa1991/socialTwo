@@ -11,6 +11,10 @@ import Navbar from './components/Navbar/Navbar';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import { intializedApp } from './redux/app-reducer';
+import { BrowserRouter } from 'react-router-dom';
+import store from './redux/redux-store';
+import { Provider } from 'react-redux';
+
 class App  extends React.Component  {
    //debugger;
 
@@ -43,5 +47,17 @@ class App  extends React.Component  {
 const mapStateToProps = (state) => ({
   initialized: state.app.initialized
 });
-export default compose( withRouter,
+const Appcontainer = compose( withRouter,
   connect( mapStateToProps , {intializedApp}))(App);
+
+
+
+  const AppFacebook = (props) => {
+    return <BrowserRouter>
+    <Provider store={store} >
+        <Appcontainer />
+    </Provider>
+  </BrowserRouter>
+  }
+
+  export default AppFacebook;
