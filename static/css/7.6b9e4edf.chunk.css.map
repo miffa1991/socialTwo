@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/common/FormsControl/FormControls.module.css"],"names":[],"mappings":"AAAA,qIAEG,oBACH,CACA,gEACG,SACH","file":"7.6b9e4edf.chunk.css","sourcesContent":[".formControl.error input,\n.formControl.error textarea{\n   border: 2px solid red;\n}\n.formControl.error span{\n   color: red;\n}"]}
