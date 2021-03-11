@@ -6,8 +6,8 @@ import MessageForm from './MessageForm';
 
 const Messages = (props) =>{
    // debugger;
-   let dialogElements = props.dialogArr.map( d => (<Dialogs name={d.name} id={d.id} />));
-   let messageElements = props.messageArr.map( m => (<MessageItem message={m.message} />));
+   let dialogElements = props.dialogArr.map( d => (<Dialogs name={d.name} key={d.id} id={d.id} />));
+   let messageElements = props.messageArr.map( m => (<MessageItem message={m.message} key={m.id} />));
    //let messageElementRef = React.createRef(); //створюемо пусту ссылку
 
    // let changeMessage = (e) => {

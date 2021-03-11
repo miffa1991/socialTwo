@@ -14,7 +14,7 @@ let initialState = {
    users: [],
    count: 10, // Количество пользователей на странице
    currentPage: 1, // Текущая страница
-   totalCount: 20, // Количество пользователей
+   totalCount: 10, // Количество пользователей
    fetching: true,
    disable:[]
 };
@@ -34,7 +34,7 @@ let usersReducer = (state = initialState, action) => {
       
       return {
          ...state,
-         currentPage:action.count
+         currentPage:action.currentPage
       };
       
       case TOTAL_USERS:
@@ -83,7 +83,7 @@ let usersReducer = (state = initialState, action) => {
 export const followAC = (userID) => ({type:FOLLOW, userID}); 
 export const unFollowAC = (userID) => ({type:UNFOLLOW, userID}); 
 export const setUsers = (users) => ({type:SET_USERS, users}); 
-export const setCurrentPage = (currentPage) => ({type:CURRENT_PAGE, count:currentPage});
+export const setCurrentPage = (currentPage) => ({type:CURRENT_PAGE, currentPage});
 export const setPageCount = (totalCount) => ({type:TOTAL_USERS, totalCount}); 
 export const isFetching = (fetching) => ({type:IS_FETCHING, fetching}); 
 export const isDisable = (isFetching, userId) => ({ type: IS_DISABLE_BUTTONS, isFetching, userId });

@@ -19,14 +19,14 @@ import { listUsers,
 class UsersContainer extends React.Component {
    
    componentDidMount(){
-      this.props.getUsers(this.props.count, this.props.currentPage); 
+      this.props.getUsers( this.props.currentPage, this.props.count); 
    }
 
    currentPage = (current) => {
       // console.log(p);
       // debugger;
       this.props.setCurrentPage(current);
-      this.props.getUsers(this.props.count, current);
+      this.props.getUsers(current, this.props.count);
    }
    
    // currentPage
@@ -37,7 +37,7 @@ class UsersContainer extends React.Component {
          <Users {...this.props}  users={this.props.users}
                   count= {this.props.count} 
                   totalCount = {this.props.totalCount}
-                  currentPage={this.currentPage}
+                  currentPageF={this.currentPage}
                   currentPageProps = {this.props.currentPage}
                   follow = {this.props.follow}
                   unfollow = {this.props.unfollow}

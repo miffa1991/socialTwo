@@ -2,18 +2,13 @@ import React from 'react';
 import s from './Users.module.css';
 import avatar from '../../assets/img/avatar.jpg';
 import { NavLink } from 'react-router-dom';
+import Pagination from '../common/Pagination/Pagination';
 
 
 
 const Users = (props) =>{
    // debugger;
-   let pageCount =  Math.ceil(props.totalCount/props.count);
-   let arrPage = [];
-   
-   for(let i = 1; i <= pageCount; i++){
-      arrPage.push(i);
-   }
-debugger;
+
    return(
        <div className={s.users}>
        
@@ -37,7 +32,7 @@ debugger;
                   } }>follow</button> }
             </div>
          </div>
-         {/* <div className={s.col2}>
+         { <div className={s.col2}>
             <div className="row">
                <div className="name">{u.name}</div>
                <div className="country">Ukraine</div>
@@ -46,15 +41,13 @@ debugger;
                <div className="status">{u.status}</div>
                <div className="city">Vinnytca</div>
             </div>
-         </div> */}
+         </div> }
    </div>
    )) }
-     <div className={s.pagination}>
-            { arrPage.map( p => {
-               return <span key={p} id={p} onClick={  ()=>{ props.currentPage(p); }}
-               className={props.currentPageProps === p ? s.active : ''} >{p}</span>
-            })}
-         </div>
+<Pagination totalCount = {props.totalCount} 
+            currentPageProps={props.currentPageProps} 
+            count = {props.count} 
+            currentPageF = {props.currentPageF} />
       </div>
    )
 }

@@ -1,20 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import './App.css';
 import Preloader from './components/common/Preloader/Preloader';
 import HeaderContainer from './components/Header/HeaderContainer.jsx';
-import Login from './components/Login/Login';
-import MessagesContainer from './components/Messages/MessagesContainer';
 import Navbar from './components/Navbar/Navbar';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import UsersContainer from './components/Users/UsersContainer';
 import { intializedApp } from './redux/app-reducer';
 import { BrowserRouter } from 'react-router-dom';
 import store from './redux/redux-store';
 import { Provider } from 'react-redux';
 
+ // React.lazy загружаэмо компоненту тільки коли вона потрібна
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+const Login = React.lazy(() => import('./components/Login/Login'));
+const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
 class App  extends React.Component  {
    //debugger;
 
@@ -31,11 +32,16 @@ class App  extends React.Component  {
         <HeaderContainer />
         <div className="container" >
           <Navbar />
-          <Route path={`/profile/:userID?`} 
-          render={ () => <ProfileContainer /> } /> 
-          <Route path='/dialogs' render={ () => <MessagesContainer />} />
-          <Route path='/users' render={ () => <UsersContainer /> } />
-          <Route path='/login' render={ () => <Login /> } />
+           {/* // React.Suspense потрібний для роботи React.lazy */}
+          <React.Suspense fallback={<Preloader />}>
+            <Switch>
+                <Route path={`/profile/:userID?`} 
+                render={ () => <ProfileContainer /> } /> 
+                <Route path='/dialogs' render={ () => <MessagesContainer />} />
+                <Route path='/users' render={ () => <UsersContainer /> } />
+                <Route path='/login' render={ () => <Login /> } />
+            </Switch>
+          </React.Suspense>
         </div>
       </div>
     );
