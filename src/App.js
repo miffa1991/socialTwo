@@ -59,7 +59,7 @@ const Appcontainer = compose( withRouter,
 
 
   const AppFacebook = (props) => {
-    return <BrowserRouter>
+    return <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Provider store={store} >
         <Appcontainer />
     </Provider>

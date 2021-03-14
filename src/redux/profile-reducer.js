@@ -4,6 +4,7 @@ import { profileAPI } from "../api/api";
 const ADD_POST = 'ADD-POST/profile';
 const PROFILE_STATE = 'PROFILE_STATE/profile';
 const SET_STATUS = 'SET_STATUS/profile';
+const SET_AVATAR = 'SET_AVATAR/profile';
 
 let initialState = {
    postWall: [
@@ -32,18 +33,22 @@ let profileReducer = (state = initialState, action) => {
          };
 
       case PROFILE_STATE:
-
-      return {
-         ...state,
-         profile: action.profile
-      };
+         return {
+            ...state,
+            profile: action.profile
+         };
 
       case SET_STATUS:
-
-      return {
-         ...state,
-         status: action.status
-      }
+         return {
+            ...state,
+            status: action.status
+         };
+      case SET_AVATAR:
+         
+         return {
+            ...state,
+            profile: {...state.profile, photos:action.photos}
+         }
          
       default:
          return {
@@ -58,9 +63,19 @@ export const addNewPostActionCreator = (text) => ({type:ADD_POST, text});
 // export const changePostTextActionCreator = (text) => ({type:UPDATE_TEXT_NEW_POST, text:text}); 
 export const setProfile = (profile) =>({type:PROFILE_STATE, profile});
 const setStatus = (status) =>({type:SET_STATUS, status});
-
+const setAvatar = (photos) =>({type:SET_AVATAR, photos});
 
 // thunk
+
+// saveAvatar
+export const saveAvatar = (image) => async (dispatch) => {
+   
+   let response = await  profileAPI.saveAvatar(image);
+
+         dispatch(setAvatar(response.data.data.photos));
+    
+}
+
 
 export const getProfile = (userId) => async (dispatch) => {
    let response = await profileAPI.getProfile(userId);

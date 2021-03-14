@@ -5,53 +5,63 @@ const instance = axios.create({
    withCredentials: true,
    headers:{ 
       'API-KEY':'d2f5b007-0ccf-4ac0-acee-b03a552a8ba4'}
-});
-
-export const userAPI = {
-   setUsers( currentPage = 1, count = 10) {
-      return instance.get(`users?page=${currentPage}&count=${count}`)
-         .then(response => response.data);
-      
-   },
-   getFollow(id) {
-      return instance.post(`follow/${id}`)
-      .then(response => response.data);
-      
-   },
-   getUnFollow(id) {
-      return instance.delete(`follow/${id}`)
-      .then(response => response.data);
-      
-   }
-}
-
-
-export const authAPI = {
+   });
    
-   me() {
-      return instance.get(`auth/me/`);
-      
-   },
-   login(email, password, rememberMe) {
-      return instance.post(`auth/login/`, {email, password, rememberMe});
-      
-   },
-   logout() {
-      return instance.delete(`auth/login/`);
-      
+   export const userAPI = {
+      setUsers( currentPage = 1, count = 10) {
+         return instance.get(`users?page=${currentPage}&count=${count}`)
+         .then(response => response.data);
+         
+      },
+      getFollow(id) {
+         return instance.post(`follow/${id}`)
+         .then(response => response.data);
+         
+      },
+      getUnFollow(id) {
+         return instance.delete(`follow/${id}`)
+         .then(response => response.data);
+         
+      }
    }
-}
-
-
-export const profileAPI = {
-   getProfile(userID) {
-      return instance.get(`/profile/`+userID);
-   },
-   getStatus(userID) {
-      return instance.get(`/profile/status/`+userID);
-   },
-   updateStatus(status) {
-      return instance.put(`/profile/status/`,{status:status});
+   
+   
+   export const authAPI = {
+      
+      me() {
+         return instance.get(`auth/me/`);
+         
+      },
+      login(email, password, rememberMe) {
+         return instance.post(`auth/login/`, {email, password, rememberMe});
+         
+      },
+      logout() {
+         return instance.delete(`auth/login/`);
+         
+      }
    }
-}
-
+   
+   
+   export const profileAPI = {
+      getProfile(userID) {
+         return instance.get(`/profile/`+userID);
+      },
+      getStatus(userID) {
+         return instance.get(`/profile/status/`+userID);
+      },
+      updateStatus(status) {
+         return instance.put(`/profile/status/`,{status:status});
+      },
+      saveAvatar(imageFile) {
+         const formData = new FormData();
+         formData.append('image', imageFile);
+         return instance.put(`/profile/photo/`,formData, {
+            headers: {
+               'Content-Type': 'multipart/form-data'
+            }
+         }
+         );
+      }
+   }
+   
