@@ -32,14 +32,22 @@ const instance = axios.create({
          return instance.get(`auth/me/`);
          
       },
-      login(email, password, rememberMe) {
-         return instance.post(`auth/login/`, {email, password, rememberMe});
+      login(email, password, rememberMe, captcha = null) {
+         return instance.post(`auth/login/`, {email, password, rememberMe, captcha});
          
       },
       logout() {
-         return instance.delete(`auth/login/`);
+         return instance.delete(`auth/login`);
          
       }
+   }
+
+   export const securityAPI = {
+      
+      captcha() {
+         return instance.get(`security/get-captcha-url`);
+         
+      },
    }
    
    
@@ -51,7 +59,7 @@ const instance = axios.create({
          return instance.get(`/profile/status/`+userID);
       },
       updateStatus(status) {
-         return instance.put(`/profile/status/`,{status:status});
+         return instance.put(`/profile/status/`,{status});
       },
       saveAvatar(imageFile) {
          const formData = new FormData();
@@ -62,6 +70,10 @@ const instance = axios.create({
             }
          }
          );
+      },
+      editProfile(profile) {
+         debugger
+         return instance.put(`/profile/`, profile);
       }
    }
    

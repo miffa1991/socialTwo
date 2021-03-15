@@ -1,10 +1,12 @@
 import { profileAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
 
 // константы
 const ADD_POST = 'ADD-POST/profile';
 const PROFILE_STATE = 'PROFILE_STATE/profile';
 const SET_STATUS = 'SET_STATUS/profile';
 const SET_AVATAR = 'SET_AVATAR/profile';
+
 
 let initialState = {
    postWall: [
@@ -48,7 +50,8 @@ let profileReducer = (state = initialState, action) => {
          return {
             ...state,
             profile: {...state.profile, photos:action.photos}
-         }
+         };
+
          
       default:
          return {
@@ -60,7 +63,6 @@ let profileReducer = (state = initialState, action) => {
 
 //action creator можно просто импортировать в компоненты
 export const addNewPostActionCreator = (text) => ({type:ADD_POST, text}); 
-// export const changePostTextActionCreator = (text) => ({type:UPDATE_TEXT_NEW_POST, text:text}); 
 export const setProfile = (profile) =>({type:PROFILE_STATE, profile});
 const setStatus = (status) =>({type:SET_STATUS, status});
 const setAvatar = (photos) =>({type:SET_AVATAR, photos});
@@ -73,7 +75,6 @@ export const saveAvatar = (image) => async (dispatch) => {
    let response = await  profileAPI.saveAvatar(image);
 
          dispatch(setAvatar(response.data.data.photos));
-    
 }
 
 
@@ -92,6 +93,21 @@ export const updateStatus = (status) => async (dispatch) => {
       if(response.data.resultcode === 0){
          dispatch(setStatus(response.data));
       }
+}
+
+
+export const editProfile = (profile) => async (dispatch, getState) => {
+   debugger
+   let idUser = getState().auth.id;
+   let response = await profileAPI.editProfile(profile);
+   if (response.data.resultCode === 0) {
+      dispatch(getProfile(idUser));
+   } else {
+      let messages = response.data.messages ? response.data.messages[0] : 'some error';
+      dispatch(stopSubmit('edit-profile', {_error:messages}));
+      // return Promise.reject(response.data.messages[0]);
+   }
+   
 }
 
 export default profileReducer;

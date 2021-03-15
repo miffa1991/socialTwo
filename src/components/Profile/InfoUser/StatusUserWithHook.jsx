@@ -20,7 +20,7 @@ const StatusUserWithHook = (props) => {
       setstatus(e.currentTarget.value);
    }
 
-      return <div>
+      return <div> Status:
          {!state &&
          <div onDoubleClick={activeMode}>{status || '----'}</div>
          }
