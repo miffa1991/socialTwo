@@ -62,7 +62,7 @@ const InfoUserDataForm = (props) => {
    }
    return <div>
       
-      <InfoUserDataFormReduxForm onSubmit={props.onSubmit} profile={props.profile} initialValues={props.profile} onSubmit={onSubmit} />
+      <InfoUserDataFormReduxForm profile={props.profile} initialValues={props.profile} onSubmit={onSubmit} />
    </div>
 }
 

@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from './InfoUser.module.css';
 import StatusUserWithHook from './StatusUserWithHook';

@@ -14,13 +14,11 @@ const instance = axios.create({
          
       },
       getFollow(id) {
-         return instance.post(`follow/${id}`)
-         .then(response => response.data);
+         return instance.post(`follow/${id}`);
          
       },
       getUnFollow(id) {
-         return instance.delete(`follow/${id}`)
-         .then(response => response.data);
+         return instance.delete(`follow/${id}`);
          
       }
    }
@@ -72,7 +70,7 @@ const instance = axios.create({
          );
       },
       editProfile(profile) {
-         debugger
+         
          return instance.put(`/profile/`, profile);
       }
    }

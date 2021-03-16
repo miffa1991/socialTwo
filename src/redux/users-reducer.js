@@ -2,13 +2,13 @@ import { updateObjectInArray } from "../utils/object-helpers";
 import { userAPI } from "./../api/api";
 
 // константы
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS';
-const CURRENT_PAGE = 'CURRENT_PAGE';
-const TOTAL_USERS = 'TOTAL_USERS'; 
-const IS_FETCHING = 'IS_FETCHING'; 
-const IS_DISABLE_BUTTONS = 'IS_DISABLE_BUTTONS'; 
+const FOLLOW = 'FOLLOW/users-reducer';
+const UNFOLLOW = 'UNFOLLOW/users-reducer';
+const SET_USERS = 'SET_USERS/users-reducer';
+const CURRENT_PAGE = 'CURRENT_PAGE/users-reducer';
+const TOTAL_USERS = 'TOTAL_USERS/users-reducer'; 
+const IS_FETCHING = 'IS_FETCHING/users-reducer'; 
+const IS_DISABLE_BUTTONS = 'IS_DISABLE_BUTTONS/users-reducer'; 
 
 let initialState = {
    users: [],
@@ -112,14 +112,18 @@ const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) =>
    dispatch(isDisable(false, userId));
 }
 
-export const follow = (userId) =>  async (dispatch) => {
-   followUnfollowFlow(dispatch, userId, userAPI.getFollow.bind(userId), followAC);
-}
+export const follow = (userId) => {
+   return async (dispatch) => {
+      followUnfollowFlow(dispatch, userId, userAPI.getFollow.bind(userId), followAC);
+   }
+} 
 
-export const unfollow = (userId) => async (dispatch) => {
-   followUnfollowFlow(dispatch, userId, userAPI.getUnFollow.bind(userId), unFollowAC);
-}
 
+export const unfollow = (userId) => {
+   return async (dispatch) => {
+      followUnfollowFlow(dispatch, userId, userAPI.getUnFollow.bind(userId), unFollowAC);
+   }   
+} 
 
 
 export default usersReducer;

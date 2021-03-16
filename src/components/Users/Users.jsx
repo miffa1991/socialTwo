@@ -7,11 +7,11 @@ import Pagination from '../common/Pagination/Pagination';
 
 
 const Users = (props) =>{
-   // debugger;
+   debugger;
 
    return(
-       <div className={s.users}>
-       
+      <div className={s.users}>
+      
       { props.users.map( u => (
          
       <div className={s.userItem} key={u.id}>
@@ -22,14 +22,17 @@ const Users = (props) =>{
                </NavLink>
                { u.followed 
                ? 
-               <button disabled={props.disable.some(id => id === u.id)} 
-               onClick={ ()=>{
-                  props.unfollow(u.id); //відправляємо запрос на сервер
-                  } }>unfollow</button> 
+               <button  disabled={ props.disable.some(id => id === u.id) } 
+                        onClick={ () => {
+                           props.unfollow(u.id); //відправляємо запрос на сервер
+                           } }>unfollow
+                  </button> 
                : 
-               <button  disabled={props.disable.some(id => id === u.id)} onClick={ ()=>{
-                  props.follow(u.id); //відправляємо запрос на сервер
-                  } }>follow</button> }
+               <button  disabled={props.disable.some(id => id === u.id)} 
+                        onClick={ ()=>{
+                           props.follow(u.id); //відправляємо запрос на сервер
+                           } }>follow
+                  </button> }
             </div>
          </div>
          { <div className={s.col2}>

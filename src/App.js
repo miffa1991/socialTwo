@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import './App.css';
 import Preloader from './components/common/Preloader/Preloader';
@@ -35,11 +35,13 @@ class App  extends React.Component  {
            {/* // React.Suspense потрібний для роботи React.lazy */}
           <React.Suspense fallback={<Preloader />}>
             <Switch>
+                <Route exact path='/' ><Redirect to='/profile'/></Route>
                 <Route path={`/profile/:userID?`} 
                 render={ () => <ProfileContainer /> } /> 
                 <Route path='/dialogs' render={ () => <MessagesContainer />} />
                 <Route path='/users' render={ () => <UsersContainer /> } />
                 <Route path='/login' render={ () => <Login /> } />
+                <Route path='*' render={ () => <div>404 not found</div> } />
             </Switch>
           </React.Suspense>
         </div>

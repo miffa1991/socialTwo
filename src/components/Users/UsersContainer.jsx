@@ -2,19 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { follow,
-   unfollow,
-   getUsers,
-   setCurrentPage,
-   setPageCount} from '../../redux/users-reducer';
+         unfollow,
+         getUsers,
+         setCurrentPage,
+         setPageCount} from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
 import { listUsers, 
-   countUsers, 
-   currentPageS, 
-   totalCountS,
-   fetchingS, 
-   disableS } from '../../redux/users-selector';
-
+         countUsers, 
+         currentPageS, 
+         totalCountS,
+         fetchingS, 
+         disableS } from '../../redux/users-selector';
 
 class UsersContainer extends React.Component {
    
